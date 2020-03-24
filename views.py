@@ -1,7 +1,7 @@
 """Define the views and view based operations here"""
 
 from flask.views import MethodView
-from flask import render_template, request
+from flask import render_template, request, flash, redirect
 from forms import UserForm
 from models import *
 from app import db
@@ -23,8 +23,8 @@ class TestRoute(MethodView):
             user = User(**form.data)
             db.session.add(user)
             db.session.commit()
-            # reset the form | no data should be there
-            form = UserForm()
+            flash("Successfully added")
+            return redirect("/")
         return self.render_page(form)
 
     def render_page(self, form):
